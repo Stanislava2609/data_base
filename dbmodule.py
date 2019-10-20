@@ -122,8 +122,7 @@ if __name__ == '__main__':
     test = Tests()
 
     new_values = "path = 'S'"
-    condition = "id = 20"
+    condition = "id = 21"
     test.update_data(new_values, condition)
-
 
 
