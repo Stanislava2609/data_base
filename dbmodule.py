@@ -41,30 +41,42 @@ class DbSettings:
 
     def db_insert_data(self, table_name, columns, values):
         table_name = self.scrub(str(table_name))
-        if columns != '':
+        try:
             sql = "INSERT INTO {0} ({1}) VALUES ({2})".format(table_name, columns, values)
             self.cursor.execute(sql)
             self.conn.commit()
+        except sqlite3.DatabaseError as error:
+            print("Error: ", error)
 
     def db_select_data(self, table_name, columns):
         table_name = self.scrub(str(table_name))
-        sql = "SELECT {0} FROM {1}".format(columns, table_name)
-        self.cursor.execute(sql)
-        rows = self.cursor.fetchall()
-        for row in rows:
-            print(row)
+        try:
+            sql = "SELECT {0} FROM {1}".format(columns, table_name)
+            self.cursor.execute(sql)
+            rows = self.cursor.fetchall()
+            for row in rows:
+                print(row)
+        except sqlite3.DatabaseError as error:
+            print("Error: ", error)
+
 
     def db_delete_data(self, table_name, condition):
         table_name = self.scrub(str(table_name))
-        sql = "DELETE FROM {0} WHERE {1}".format(table_name, condition)
-        self.cursor.execute(sql)
-        self.conn.commit()
+        try:
+            sql = "DELETE FROM {0} WHERE {1}".format(table_name, condition)
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except sqlite3.DatabaseError as error:
+            print("Error: ", error)
 
     def db_update_data(self, table_name, new_values, condition):
         table_name = self.scrub(str(table_name))
-        sql = "UPDATE {0} SET {1} WHERE {2} ".format(table_name, new_values, condition)
-        self.cursor.execute(sql)
-        self.conn.commit()
+        try:
+            sql = "UPDATE {0} SET {1} WHERE {2} ".format(table_name, new_values, condition)
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except sqlite3.DatabaseError as error:
+            print("Error: ", error)
 
 
 class Tests(DbSettings):
