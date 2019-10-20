@@ -24,7 +24,7 @@ class DbSettings:
             "name TEXT, "
             "orders INTEGER,"
             "path TEXT,"
-            "aegs TEXT,"
+            "args TEXT,"
             "group_id INTEGER,"
             "FOREIGN KEY(group_id) REFERENCES Groups(id))")
 
@@ -69,7 +69,7 @@ class DbSettings:
 
 class Tests(DbSettings):
     table_name = 'Tests'
-    columns = 'name, orders, path, aegs, group_id'
+    columns = 'name, orders, path, args, group_id'
 
     def insert_data(self, values):
         self.db_insert_data(self.table_name, self.columns, values)
@@ -120,9 +120,10 @@ class TestingTypes(DbSettings):
 
 if __name__ == '__main__':
     test = Tests()
+    test.insert_data("'name_1', 1, 'path_1', 'args_1', 1")
+    test.select_data('*')
+    test.delete_data('id = 10')
+    test.update_data("path = 'path_new'", "id = 24")
 
-    new_values = "path = 'S'"
-    condition = "id = 21"
-    test.update_data(new_values, condition)
 
 
